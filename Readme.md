@@ -11,7 +11,7 @@ It is a Cryptocurrency Development Platform. It has a C-API with support for Bit
 
 ### Bitprim C-API Overview
 
-At the moment the C-API is under development, here we will describe what does it offer in a very high level. To learn more about Bitprim C-API check the following link
+At the moment the C-API is under development, here we will describe what does it offer in a very high level. To learn more about Bitprim C-API check the following [link](https://www.bitprim.org/c-interface.html)
 
 Main feature list:
 
