@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-16-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-16-0 http://www.eiffel.com/developers/xml/configuration-1-16-0.xsd" name="bitclient" uuid="6B5D68D3-E7E1-4CCA-B845-15865F85FD49" library_target="bitclient">
+	<target name="bitclient">
+		<root all_classes="true"/>
+		<file_rule>
+			<exclude>/CVS$</exclude>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\.git$</exclude>
+			<exclude>/\.svn$</exclude>
+		</file_rule>
+		<option warning="true">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<external_include location="C:\home\poc\bitcoin\src\spec\include">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_include>
+		<external_object location="C:\home\poc\bitcoin\bitprim-node-cint.lib">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_object>
+
+		<setting name="console_application" value="true"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
+		<library name="time" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
+		<cluster name="client" location=".\src\" recursive="true"/>
+	</target>
+</system>
