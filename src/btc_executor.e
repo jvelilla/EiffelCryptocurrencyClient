@@ -12,6 +12,7 @@ inherit
 		rename
 			make as make_base
 		end
+
 create
 	make
 
