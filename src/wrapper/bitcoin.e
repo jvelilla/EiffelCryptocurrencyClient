@@ -40,34 +40,33 @@ feature -- Executor
 			"return executor_initchain((executor_t) $a_executor);"
 		end
 
-
 feature -- Wallet
 
-		wallet_mnemonics_to_seed (a_mnemonics: POINTER): POINTER
-				--BITPRIM_EXPORT
-				--long_hash_t wallet_mnemonics_to_seed(word_list_t mnemonics);
-			external
-				"C inline use <bitprim/nodecint.h>"
-			alias
-				"[
-					long_hash_t res;
-					res = wallet_mnemonics_to_seed((word_list_t) $a_mnemonics);
-					return &(res.hash[64]);
-				]"
-			end
+	wallet_mnemonics_to_seed (a_mnemonics: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--long_hash_t wallet_mnemonics_to_seed(word_list_t mnemonics);
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+				long_hash_t res;
+				res = wallet_mnemonics_to_seed((word_list_t) $a_mnemonics);
+				return &(res.hash[64]);
+			]"
+		end
 
-		wallet_long_hash_destroy (a_pointer: POINTER)
-				--BITPRIM_EXPORT
-				--void long_hash_destroy(long_hash_t ptr);
-			external
-				"C inline use <bitprim/nodecint.h>"
-			alias
-				"[
-					long_hash_t res;
-					res.hash[64] = $a_pointer;
-					return long_hash_destroy(res);
-				]"
-			end
+	wallet_long_hash_destroy (a_pointer: POINTER)
+			--BITPRIM_EXPORT
+			--void long_hash_destroy(long_hash_t ptr);
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+				long_hash_t res;
+				res.hash[64] = $a_pointer;
+				return long_hash_destroy(res);
+			]"
+		end
 
 feature -- Word List
 
