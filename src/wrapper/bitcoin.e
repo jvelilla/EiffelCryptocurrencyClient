@@ -46,26 +46,10 @@ feature -- Wallet
 			--BITPRIM_EXPORT
 			--long_hash_t wallet_mnemonics_to_seed(word_list_t mnemonics);
 		external
-			"C inline use <bitprim/nodecint.h>"
-		alias
-			"[
-				long_hash_t res;
-				res = wallet_mnemonics_to_seed((word_list_t) $a_mnemonics);
-				return &(res.hash[64]);
-			]"
-		end
+            "C [struct %"bitprim/nodecint.h%"] (long_hash_t): EIF_POINTER"
 
-	wallet_long_hash_destroy (a_pointer: POINTER)
-			--BITPRIM_EXPORT
-			--void long_hash_destroy(long_hash_t ptr);
-		external
-			"C inline use <bitprim/nodecint.h>"
 		alias
-			"[
-				long_hash_t res;
-				res.hash[64] = $a_pointer;
-				return long_hash_destroy(res);
-			]"
+			"hash"
 		end
 
 feature -- Word List
