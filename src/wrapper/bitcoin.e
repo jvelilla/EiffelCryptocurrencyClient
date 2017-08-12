@@ -43,13 +43,30 @@ feature -- Executor
 feature -- Wallet
 
 	wallet_mnemonics_to_seed (a_mnemonics: POINTER): POINTER
-			--BITPRIM_EXPORT
-			--long_hash_t wallet_mnemonics_to_seed(word_list_t mnemonics);
-		external
-            "C [struct %"bitprim/nodecint.h%"] (long_hash_t): EIF_POINTER"
+            --BITPRIM_EXPORT
+            --long_hash_t wallet_mnemonics_to_seed(word_list_t mnemonics);
+        external
+            "C inline use <bitprim/nodecint.h>"
+        alias
+            "[
+             long_hash_t ret = wallet_mnemonics_to_seed((word_list_t) $a_mnemonics);
+             
+             for (size_t i = 0; i < 64; ++i) {
+             	printf("%d\n", (int)ret.hash[i]);
+             }
+             
+             // uint8_t 64
+             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 64);
+             memcpy(arr, ret.hash, 64);
+             return arr;
+            ]"
+	    end
 
+	wallet_free (a_pointer: POINTER)
+		external
+		 	"C inline use <stdlib.h>"
 		alias
-			"hash"
+			"free ($a_pointer)"
 		end
 
 feature -- Word List

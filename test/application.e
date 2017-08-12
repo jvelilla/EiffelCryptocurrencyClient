@@ -17,13 +17,28 @@ feature {NONE} --Initialization
 --wild net kiwi
 --787cc4e28cd3f48474cd862fa8d0795d9d5f79b561f2b9a6992ce17a50cc24985a363f7ab5d95b2305da053408c90289f44ebbe1d0f7c56e0133ba2481489055
 --80000873FE3EEF360053002000740066006F0073006F007200630069004D005C80000736FE38EF340000020CF1AC06500000020CF1AC06500000020CF1AC05F0
+
+-- previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía
+-- 9cc236d5fa28c39e835bd6f7d66b51056c3a2f56208da1c1c2997a3741fe60bb0645d849ecacff0a29f2e26977ae42b12b97a5a3a8cc78d7113b536ff069352e
+-- 2E40EBB6768881FD85EDE7A597944FE4CCB9AA13454DFF4073EDF5F991A3D51DE29711B6F17602BD41D386CA25F772D4B5872F159F55F1A1EADD9876B1D4D84E
+
+-- rival hurdle address inspire tenant almost turkey safe asset step lab boy
+-- 020b67fd929e0eb9f963443138057ceec0d62601d69b4b2327c00d74f0fd1862d164c53d49227d9dadedbbec305236bc2149d9a5267aa7c5aa004235c3c66c29
+-- 020b67fd929e0eb9f963443138057ceec0d62601d69b4b2327c00d74f0fd1862d164c53d49227d9dadedbbec305236bc2149d9a5267aa7c5aa004235c3c66c29
+
 			create l_word_list.make
---			l_word_list.add_word ("shine")
---			l_word_list.add_word ("valley")
---			l_word_list.add_word ("unhappy")
-			l_word_list.add_word ("wild")
-			l_word_list.add_word ("net")
-			l_word_list.add_word ("kiwi")
+			l_word_list.add_word ("rival")
+			l_word_list.add_word ("hurdle")
+			l_word_list.add_word ("address")
+			l_word_list.add_word ("inspire")
+			l_word_list.add_word ("tenant")
+			l_word_list.add_word ("almost")
+			l_word_list.add_word ("turkey")
+			l_word_list.add_word ("safe")
+			l_word_list.add_word ("asset")
+			l_word_list.add_word ("step")
+			l_word_list.add_word ("lab")
+			l_word_list.add_word ("boy")
 
 			create l_wallet.make (l_word_list)
 			print ("%N")
