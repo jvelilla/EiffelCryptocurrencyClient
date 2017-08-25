@@ -4,7 +4,7 @@ note
 	revision: "$Revision$"
 
 class
-	BTC_EXECUTOR
+	ECC_BTC_EXECUTOR
 
 inherit
 
@@ -13,7 +13,7 @@ inherit
 			make as make_base
 		end
 
-create
+create 
 	make
 
 feature {NONE} -- Creation
@@ -24,9 +24,9 @@ feature {NONE} -- Creation
 			l_string: C_STRING
 			l_result: INTEGER
 		do
-			create l_string.make ("c:/home/poc/file.cfg") -- todo enable to set a cfg file.
-			make_base ({BITCOIN}.new_executor (l_string.item, io.output.file_pointer, io.error.file_pointer))
-			l_result := {BITCOIN}.executor_initchain (item)
+			create l_string.make ("C:/home/poc/EiffelCryptocurrencyClient/btc-mainnet.cfg") -- todo enable to set a cfg file.
+			make_base ({ECC_BITCOIN}.new_executor (l_string.item, io.output.file_pointer, io.error.file_pointer))
+			l_result := {ECC_BITCOIN}.executor_initchain (item)
 		end
 
 
@@ -36,7 +36,21 @@ feature -- Execute
 		local
 			l_return: INTEGER
 		do
-			l_return := {BITCOIN}.executor_run_wait (item)
+			l_return := {ECC_BITCOIN}.executor_run_wait (item)
+		end
+
+feature -- Stop
+
+	stop
+		do
+			{ECC_BITCOIN}.executor_stop (item)
+		end
+
+feature -- Access Chain
+
+	chain: ECC_CHAIN
+		do
+			create Result.make ({ECC_BITCOIN}.executor_get_chain (item));
 		end
 
 feature {NONE} -- Implementation
@@ -51,7 +65,7 @@ feature {NONE} -- Implementation
 			until
 				l_done
 			loop
-				{BITCOIN}.executor_destruct(item)
+				{ECC_BITCOIN}.executor_destruct(item)
 				l_done := True
 			end
 			item := default_pointer

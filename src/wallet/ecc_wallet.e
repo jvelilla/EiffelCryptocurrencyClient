@@ -1,10 +1,11 @@
 note
-	description: "Summary description for {WALLET}."
+	description: "Summary description for {ECC_WALLET}."
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	WALLET
+	ECC_WALLET
+
 inherit
 
 	WRAPPER_BASE
@@ -17,11 +18,9 @@ create
 
 feature -- Initialization
 
-	make (a_word: WORD_LIST)
-		local
-			l_array: ARRAY [INTEGER_8]
+	make (a_word: ECC_WORD_LIST)
 		do
-		 	make_base( ({BITCOIN}.wallet_mnemonics_to_seed (a_word.item)))
+		 	make_base( ({ECC_BITCOIN}.wallet_mnemonics_to_seed (a_word.item)))
 		end
 
 feature -- Access
@@ -29,12 +28,8 @@ feature -- Access
 	seed: STRING_32
 			-- BIP 39. (Bitcoin improvement proposal).
 		local
-			l_str: STRING
-			l_index: INTEGER
 			l_memory: MANAGED_POINTER
-			l_integer: INTEGER_8
-			l_char: CHARACTER
-			l_array, l_array2: ARRAY [NATURAL_8]
+			l_array: ARRAY [NATURAL_8]
 			l_conv: BYTE_ARRAY_CONVERTER
 		do
 			create l_memory.make_from_pointer (item, 64)
@@ -50,7 +45,7 @@ feature -- Disponse
 	dispose
 			-- <Precursor>
 		do
-			{BITCOIN}.wallet_free (item)
+			{ECC_BITCOIN}.wallet_free (item)
 			item := default_pointer
 		end
 

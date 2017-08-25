@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {WORD_LIST}."
+	description: "Summary description for {ECC_WORD_LIST}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	WORD_LIST
+	ECC_WORD_LIST
 
 inherit
 
@@ -21,11 +21,18 @@ feature {NONE} -- Creation
 
 	make
 		do
-			make_base ({BITCOIN}.word_list_constructor)
+			make_base ({ECC_BITCOIN}.word_list_constructor)
 		end
 
-
 feature -- Change Element
+
+	add_word_list (a_string: STRING_32)
+			-- A string representing a list of word separated by an space.
+		do
+			across a_string.split (' ') as ic loop
+				add_word (ic.item)
+			end
+		end
 
 	add_word (a_word: STRING_32)
 			-- Add 'a_word' to the word_list.
@@ -33,7 +40,7 @@ feature -- Change Element
 			c_string: C_STRING
 		do
 			create c_string.make (a_word)
-			{BITCOIN}.work_list_add_word (item, c_string.item)
+			{ECC_BITCOIN}.work_list_add_word (item, c_string.item)
 		end
 
 feature {NONE} -- Implementation
@@ -48,7 +55,7 @@ feature {NONE} -- Implementation
 			until
 				l_done
 			loop
-				{BITCOIN}.word_list_destuctor(item)
+				{ECC_BITCOIN}.word_list_destuctor(item)
 				l_done := True
 			end
 			item := default_pointer
