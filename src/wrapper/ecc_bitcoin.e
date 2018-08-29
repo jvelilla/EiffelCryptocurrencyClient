@@ -56,8 +56,13 @@ feature -- Executor
 			"return (chain_t) executor_get_chain((executor_t)$a_pointer)"
 		end
 
---BITPRIM_EXPORT
---p2p_t executor_get_p2p(executor_t exec);
+	executor_init_and_run_wait (a_executor: POINTER): INTEGER_32
+			--	BITPRIM_EXPORT int executor_init_and_run_wait(executor_t exec);
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"return executor_init_and_run_wait((executor_t)$a_executor);"
+		end
 
 feature -- Wallet
 
@@ -155,6 +160,31 @@ feature -- Payment Address
 			"chain_payment_address_destruct((payment_address_t)$a_pointer);"
 		end
 
+	chain_payment_address_is_valid (a_pointer: POINTER): BOOLEAN
+			--	BITPRIM_EXPORT
+			--int /*bool*/ chain_payment_address_is_valid(payment_address_t payment_address);	
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"return (EIF_BOOLEAN) chain_payment_address_is_valid((payment_address_t)$a_pointer);"
+		end
+
+	chain_payment_address_hash (a_pointer: POINTER): POINTER
+			--	BITPRIM_EXPORT
+			--short_hash_t chain_payment_address_hash(payment_address_t payment_address);
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+			 short_hash_t ret = chain_payment_address_hash((payment_address_t) $a_pointer);
+             
+             // uint8_t 64
+             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 20);
+             memcpy(arr, ret.hash, 20);
+             return arr;
+			]"
+		end
+
 feature -- History compact list.
 
 
@@ -201,37 +231,53 @@ feature -- Chain
 			]"
 		end
 
-	chain_get_history_2 (a_chain: POINTER; a_address: POINTER; a_limit: INTEGER_64; a_height: INTEGER_64): POINTER
-			--BITPRIM_EXPORT
-			--int chain_get_history(chain_t chain, payment_address_t address, uint64_t /*size_t*/ limit, uint64_t /*size_t*/ from_height, history_compact_list_t* out_history);
-		external
-			"C inline use <bitprim/nodecint.h>"
-		alias
-			"[
-				history_compact_list_t out_history;
-				int res = chain_get_history((chain_t)$a_chain,(payment_address_t)$a_address,(uint64_t)$a_limit, (uint64_t)$a_height, &out_history);
-				return out_history;
-			]"
-		end
+--	chain_get_history_2 (a_chain: POINTER; a_address: POINTER; a_limit: INTEGER_64; a_height: INTEGER_64): POINTER
+--			--BITPRIM_EXPORT
+--			--int chain_get_history(chain_t chain, payment_address_t address, uint64_t /*size_t*/ limit, uint64_t /*size_t*/ from_height, history_compact_list_t* out_history);
+--		external
+--			"C inline use <bitprim/nodecint.h>"
+--		alias
+--			"[
+--				history_compact_list_t out_history;
+--				int res = chain_get_history((chain_t)$a_chain,(payment_address_t)$a_address,(uint64_t)$a_limit, (uint64_t)$a_height, &out_history);
+--				return out_history;
+--			]"
+--		end
 
-	chain_get_last_height_2 (a_chain: POINTER): INTEGER_64
-			--BITPRIM_EXPORT
-			--int chain_get_last_height(chain_t chain, uint64_t /*size_t*/* height);
-		external
-			"C inline use <bitprim/nodecint.h>"
-		alias
-			"[
-				uint64_t out_height;
-				int res = chain_get_last_height((chain_t)$a_chain, &out_height);
-				return out_height;
-			]"
-		end
+--	chain_get_last_height_2 (a_chain: POINTER): INTEGER_64
+--			--BITPRIM_EXPORT
+--			--int chain_get_last_height(chain_t chain, uint64_t /*size_t*/* height);
+--		external
+--			"C inline use <bitprim/nodecint.h>"
+--		alias
+--			"[
+--				uint64_t out_height;
+--				int res = chain_get_last_height((chain_t)$a_chain, &out_height);
+--				return out_height;
+--			]"
+--		end
 
 	chain_get_last_height (chain: POINTER; out_height: TYPED_POINTER [NATURAL_64]): INTEGER
-	   external
+	    external
 	       "C inline use <bitprim/nodecint.h>"
 	    alias
 	        "return chain_get_last_height ((chain_t) $chain, $out_height);"
+	    end
+
+	chain_get_block_height (a_chain: POINTER; a_hash: POINTER; out_height: TYPED_POINTER [NATURAL_64]): INTEGER
+	    external
+	       "C inline use <bitprim/nodecint.h>"
+	    alias
+	        "[
+	        	hash_t l_val;
+		    	memcpy(l_val.hash, $a_hash, sizeof(l_val.hash));
+		    	
+		    	for (size_t i = 0; i < 32; ++i) {
+              		printf("%d\n", (int)l_val.hash[i]);
+             	}
+		    	
+		    	return chain_get_block_height ((chain_t) $a_chain, l_val, $out_height);
+	        ]"
 	    end
 
 feature -- History Compact		

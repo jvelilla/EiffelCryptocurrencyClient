@@ -1,6 +1,5 @@
 note
 	description: "Summary description for {ECC_PAYMENT_ADDRESS}."
-	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -46,7 +45,36 @@ feature -- Accesss
 			Result := {ECC_BITCOIN}.chain_payment_address_version (item)
 		end
 
+
+	is_valid: BOOLEAN
+			-- Is the current payment address valid?
+		do
+			Result := {ECC_BITCOIN}.chain_payment_address_is_valid (item)
+		end
+
+	hash: STRING_32
+		do
+			Result := hash_implementation.to_hex_string
+			Result.to_lower
+		end
+
+	hash_as_natural_64: NATURAL_64
+		do
+			Result := hash_implementation.to_natural_64
+		end
+
 feature {NONE} -- Implementation
+
+	hash_implementation: BYTE_ARRAY_CONVERTER
+		local
+			l_memory: MANAGED_POINTER
+			l_array: ARRAY [NATURAL_8]
+		do
+			create l_memory.make_from_pointer ({ECC_BITCOIN}.chain_payment_address_hash (item), 20)
+			l_array:=l_memory.read_array (0, 20)
+			create Result.make (20)
+			Result.append_bytes (l_array)
+		end
 
 	dispose
 			-- <Precursor>

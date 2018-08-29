@@ -13,7 +13,7 @@ inherit
 			make as make_base
 		end
 
-create 
+create
 	make
 
 feature {NONE} -- Creation
@@ -25,8 +25,13 @@ feature {NONE} -- Creation
 			l_result: INTEGER
 		do
 			create l_string.make ("C:/home/poc/EiffelCryptocurrencyClient/btc-mainnet.cfg") -- todo enable to set a cfg file.
-			make_base ({ECC_BITCOIN}.new_executor (l_string.item, io.output.file_pointer, io.error.file_pointer))
-			l_result := {ECC_BITCOIN}.executor_initchain (item)
+--			make_base ({ECC_BITCOIN}.new_executor (l_string.item, io.output.file_pointer, io.error.file_pointer))
+
+			make_base ({ECC_BITCOIN}.new_executor (l_string.item, default_pointer, default_pointer))
+				-- TODO
+				-- Refactor: call executor_initchain on deman, since no all the time
+				-- is needed.
+--			l_result := {ECC_BITCOIN}.executor_initchain (item)
 		end
 
 
@@ -37,6 +42,27 @@ feature -- Execute
 			l_return: INTEGER
 		do
 			l_return := {ECC_BITCOIN}.executor_run_wait (item)
+		end
+
+feature -- Initialize
+
+	initialize
+		local
+			l_result: INTEGER
+		do
+			l_result := {ECC_BITCOIN}.executor_initchain (item)
+			-- TODO
+		end
+
+	init_and_run_wait
+			-- Similar use case as
+			-- call `initialize' and then `execute'
+			-- but in this case we call only `initialize'
+			-- iff necessary.
+		local
+			l_result: INTEGER
+		do
+			l_result := {ECC_BITCOIN}.executor_init_and_run_wait (item)
 		end
 
 feature -- Stop
