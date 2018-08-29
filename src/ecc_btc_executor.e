@@ -24,10 +24,10 @@ feature {NONE} -- Creation
 			l_string: C_STRING
 			l_result: INTEGER
 		do
-			create l_string.make ("C:/home/poc/EiffelCryptocurrencyClient/btc-mainnet.cfg") -- todo enable to set a cfg file.
---			make_base ({ECC_BITCOIN}.new_executor (l_string.item, io.output.file_pointer, io.error.file_pointer))
+			create l_string.make ("/home/fernando/dev/EiffelCryptocurrencyClient/btc-mainnet.cfg") -- todo enable to set a cfg file.
+			make_base ({ECC_BITCOIN}.new_executor (l_string.item, io.output.file_pointer, io.error.file_pointer))
 
-			make_base ({ECC_BITCOIN}.new_executor (l_string.item, default_pointer, default_pointer))
+			--make_base ({ECC_BITCOIN}.new_executor (l_string.item, default_pointer, default_pointer))
 				-- TODO
 				-- Refactor: call executor_initchain on deman, since no all the time
 				-- is needed.

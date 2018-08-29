@@ -11,7 +11,7 @@ feature {NONE} --Initialization
 --			test_word_list
 --			test_payment_address
 --			test_bitcoin_hash
-			test_block_heigh
+			test_block_height
 		end
 
 
@@ -103,7 +103,7 @@ feature {NONE} --Initialization
  			end
  		end
 
- 	test_block_heigh
+ 	test_block_height
  		local
  			executor: ECC_BTC_EXECUTOR
 			l_chain: ECC_CHAIN
@@ -115,12 +115,26 @@ feature {NONE} --Initialization
 
 			from until l_chain.heigth > 50 loop end
 
-			l_ret := l_chain.block_height ("000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f")
+
+			-- Genesis Mainnet
+			--l_ret := l_chain.block_height ("000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f")
+
+			-- Genesis Testnet
+			--l_ret := l_chain.block_height ("000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943")
+
 
 
 			print ("%N Heigth:" + l_chain.heigth.out + "%N" )
 
-			l_ret := l_chain.block_height ("0000000071966c2b1d065fd446b1e485b2c9d9594acd2007ccbd5441cfc89444")
+			-- Block #7 Mainnet
+			-- l_ret := l_chain.block_height ("0000000071966c2b1d065fd446b1e485b2c9d9594acd2007ccbd5441cfc89444")
+
+			-- Block #7 Testnet
+			l_ret := l_chain.block_height ("00000000e29e3aa65f3d12440eac9081844c464aeba7c6e6121dfc8ac0c02ba6")
+
+
+
+
 			executor.stop
 			io.read_line
 		end

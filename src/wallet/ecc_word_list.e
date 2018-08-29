@@ -21,7 +21,7 @@ feature {NONE} -- Creation
 
 	make
 		do
-			make_base ({ECC_BITCOIN}.word_list_constructor)
+			make_base ({ECC_BITCOIN}.wallet_word_list_constructor)
 		end
 
 feature -- Change Element
@@ -55,7 +55,7 @@ feature {NONE} -- Implementation
 			until
 				l_done
 			loop
-				{ECC_BITCOIN}.word_list_destuctor(item)
+				{ECC_BITCOIN}.wallet_word_list_destuctor(item)
 				l_done := True
 			end
 			item := default_pointer
