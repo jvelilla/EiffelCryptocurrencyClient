@@ -68,6 +68,10 @@ feature -- Access
 			create l_managed_pointer.make_from_array (l_byte_array.to_natural_8_array)
 
 			l_res := {ECC_BITCOIN}.chain_get_block_height (item, l_managed_pointer.item, $l_out)
+
+			print ("%N l_res:" + l_res.out + "%N" )
+			print ("%N l_out:" + l_out.out + "%N" )
+
 			Result := l_out
 			to_implement ("Error Handling")
 		end

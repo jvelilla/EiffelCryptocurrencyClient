@@ -95,88 +95,88 @@ feature -- Wallet
 
 feature -- Word List
 
-	word_list_constructor: POINTER
-			-- BITPRIM_EXPORT word_list_t word_list_construct;
+	wallet_word_list_constructor: POINTER
+			-- BITPRIM_EXPORT word_list_t wallet_word_list_construct;
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"return word_list_construct();"
+			"return wallet_word_list_construct();"
 		end
 
 	work_list_add_word (a_word_list: POINTER; a_word: POINTER)
 			--BITPRIM_EXPORT
-			--void word_list_add_word(word_list_t word_list, const char* word);
+			--void wallet_word_list_add_word(word_list_t word_list, const char* word);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"word_list_add_word((word_list_t) $a_word_list, (const char*) $a_word)"
+			"wallet_word_list_add_word((word_list_t) $a_word_list, (const char*) $a_word)"
 		end
 
-	word_list_destuctor (a_word_list: POINTER)
-			--BITPRIM_EXPORT void word_list_destruct(word_list_t word_list);
+	wallet_word_list_destuctor (a_word_list: POINTER)
+			--BITPRIM_EXPORT void wallet_word_list_destruct(word_list_t word_list);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"word_list_destruct((word_list_t) $a_word_list)"
+			"wallet_word_list_destruct((word_list_t) $a_word_list)"
 		end
 
 
 feature -- Payment Address
 
-	chain_payment_address_construct_from_string (a_pointer: POINTER): POINTER
-			--BITPRIM_EXPORT payment_address_t chain_payment_address_construct_from_string(char const* address);
+	wallet_payment_address_construct_from_string (a_pointer: POINTER): POINTER
+			--BITPRIM_EXPORT payment_address_t wallet_payment_address_construct_from_string(char const* address);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
 			"[
-				printf("chain_payment_address_construct_from_string - a_pointer: %s\n", (char const*) $a_pointer);
-				return chain_payment_address_construct_from_string((char const*) $a_pointer);
+				printf("wallet_payment_address_construct_from_string - a_pointer: %s\n", (char const*) $a_pointer);
+				return wallet_payment_address_construct_from_string((char const*) $a_pointer);
 			]"
 		end
 
-	chain_payment_address_encoded (a_pointer: POINTER): POINTER
+	wallet_payment_address_encoded (a_pointer: POINTER): POINTER
 			--BITPRIM_EXPORT
-			--char const* chain_payment_address_encoded(payment_address_t payment_address);
+			--char const* wallet_payment_address_encoded(payment_address_t payment_address);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"return (char const*) chain_payment_address_encoded((payment_address_t) $a_pointer);"
+			"return (char const*) wallet_payment_address_encoded((payment_address_t) $a_pointer);"
 		end
 
-	chain_payment_address_version (a_pointer: POINTER): INTEGER_8
+	wallet_payment_address_version (a_pointer: POINTER): INTEGER_8
 			--BITPRIM_EXPORT
-			--uint8_t chain_payment_address_version(payment_address_t payment_address);
+			--uint8_t wallet_payment_address_version(payment_address_t payment_address);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"return (uint8_t) chain_payment_address_version((payment_address_t)$a_pointer);"
+			"return (uint8_t) wallet_payment_address_version((payment_address_t)$a_pointer);"
 		end
 
-	chain_payment_address_destruct(a_pointer: POINTER)
-			--BITPRIM_EXPORT void chain_payment_address_destruct(payment_address_t payment_address);
+	wallet_payment_address_destruct(a_pointer: POINTER)
+			--BITPRIM_EXPORT void wallet_payment_address_destruct(payment_address_t payment_address);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"chain_payment_address_destruct((payment_address_t)$a_pointer);"
+			"wallet_payment_address_destruct((payment_address_t)$a_pointer);"
 		end
 
-	chain_payment_address_is_valid (a_pointer: POINTER): BOOLEAN
+	wallet_payment_address_is_valid (a_pointer: POINTER): BOOLEAN
 			--	BITPRIM_EXPORT
-			--int /*bool*/ chain_payment_address_is_valid(payment_address_t payment_address);	
+			--int /*bool*/ wallet_payment_address_is_valid(payment_address_t payment_address);	
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
-			"return (EIF_BOOLEAN) chain_payment_address_is_valid((payment_address_t)$a_pointer);"
+			"return (EIF_BOOLEAN) wallet_payment_address_is_valid((payment_address_t)$a_pointer);"
 		end
 
-	chain_payment_address_hash (a_pointer: POINTER): POINTER
+	wallet_payment_address_hash (a_pointer: POINTER): POINTER
 			--	BITPRIM_EXPORT
-			--short_hash_t chain_payment_address_hash(payment_address_t payment_address);
+			--short_hash_t wallet_payment_address_hash(payment_address_t payment_address);
 		external
 			"C inline use <bitprim/nodecint.h>"
 		alias
 			"[
-			 short_hash_t ret = chain_payment_address_hash((payment_address_t) $a_pointer);
+			 short_hash_t ret = wallet_payment_address_hash((payment_address_t) $a_pointer);
              
              // uint8_t 64
              uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 20);

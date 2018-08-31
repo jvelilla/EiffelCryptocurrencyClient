@@ -23,7 +23,7 @@ feature {NONE} -- Creation
 			c_string: C_STRING
 		do
 			create c_string.make (a_address)
-			make_base ({ECC_BITCOIN}.chain_payment_address_construct_from_string (c_string.item))
+			make_base ({ECC_BITCOIN}.wallet_payment_address_construct_from_string (c_string.item))
 		end
 
 feature -- Accesss
@@ -33,7 +33,7 @@ feature -- Accesss
 			c_string: C_STRING
 			l_ptr: POINTER
 		do
-			l_ptr := {ECC_BITCOIN}.chain_payment_address_encoded (item)
+			l_ptr := {ECC_BITCOIN}.wallet_payment_address_encoded (item)
 			if l_ptr /= default_pointer then
 				create c_string.make_by_pointer (l_ptr)
 				Result := c_string.string
@@ -42,14 +42,14 @@ feature -- Accesss
 
 	version: INTEGER_8
 		do
-			Result := {ECC_BITCOIN}.chain_payment_address_version (item)
+			Result := {ECC_BITCOIN}.wallet_payment_address_version (item)
 		end
 
 
 	is_valid: BOOLEAN
 			-- Is the current payment address valid?
 		do
-			Result := {ECC_BITCOIN}.chain_payment_address_is_valid (item)
+			Result := {ECC_BITCOIN}.wallet_payment_address_is_valid (item)
 		end
 
 	hash: STRING_32
@@ -70,7 +70,7 @@ feature {NONE} -- Implementation
 			l_memory: MANAGED_POINTER
 			l_array: ARRAY [NATURAL_8]
 		do
-			create l_memory.make_from_pointer ({ECC_BITCOIN}.chain_payment_address_hash (item), 20)
+			create l_memory.make_from_pointer ({ECC_BITCOIN}.wallet_payment_address_hash (item), 20)
 			l_array:=l_memory.read_array (0, 20)
 			create Result.make (20)
 			Result.append_bytes (l_array)
@@ -86,7 +86,7 @@ feature {NONE} -- Implementation
 			until
 				l_done
 			loop
-				{ECC_BITCOIN}.chain_payment_address_destruct(item)
+				{ECC_BITCOIN}.wallet_payment_address_destruct(item)
 				l_done := True
 			end
 			item := default_pointer
