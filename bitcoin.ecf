@@ -12,14 +12,28 @@
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 
-		<external_include location="/home/fernando/dev/EiffelCryptocurrencyClient/C/bitprim/include">
+		<external_include location="$ECF_CONFIG_PATH\C\bitprim\include">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_include>		
+	
+		<external_object location="$ECF_CONFIG_PATH\C\bitprim\lib\bitprim-node-cint.lib">
+			<condition>
+				<platform value="windows"/>
+			</condition>            
+		</external_object>
+	
+
+
+		<external_include location="$ECF_CONFIG_PATH/C/bitprim/include">
 			<condition>
 				<platform excluded_value="windows"/>
 			</condition>
 		</external_include>
 
-		<external_object location="/home/fernando/dev/EiffelCryptocurrencyClient/C/bitprim/lib/libbitprim-node-cint.so">
-            <condition>
+		<external_object location="$ECF_CONFIG_PATH/C/bitprim/lib/libbitprim-node-cint.so">
+			<condition>
 				<platform excluded_value="windows"/>
 			</condition>            
 		</external_object>
