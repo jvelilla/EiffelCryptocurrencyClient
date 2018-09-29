@@ -1,17 +1,7 @@
-/*struct BC_API stealth_compact
-{
-    typedef std::vector<stealth_compact> list;
-
-    hash_digest ephemeral_public_key_hash;
-    short_hash public_key_hash;
-    hash_digest transaction_hash;
-};*/
-
-
 /**
- * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2016-2018 Bitprim Inc.
  *
- * This file is part of libbitcoin.
+ * This file is part of Bitprim.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -40,22 +30,22 @@ extern "C" {
 #endif
 
 BITPRIM_EXPORT
-hash_t stealth_compact_get_ephemeral_public_key_hash(stealth_compact_t stealth);
+hash_t chain_stealth_compact_get_ephemeral_public_key_hash(stealth_compact_t stealth);
 
 BITPRIM_EXPORT
-void stealth_compact_get_ephemeral_public_key_hash_out(stealth_compact_t stealth, hash_t* out_epk_hash);
+void chain_stealth_compact_get_ephemeral_public_key_hash_out(stealth_compact_t stealth, hash_t* out_epk_hash);
 
 BITPRIM_EXPORT
-hash_t stealth_compact_get_transaction_hash(stealth_compact_t stealth);
+hash_t chain_stealth_compact_get_transaction_hash(stealth_compact_t stealth);
 
 BITPRIM_EXPORT
-void stealth_compact_get_transaction_hash_out(stealth_compact_t stealth, hash_t* out_tx_hash);
+void chain_stealth_compact_get_transaction_hash_out(stealth_compact_t stealth, hash_t* out_tx_hash);
 
 BITPRIM_EXPORT
-short_hash_t stealth_compact_get_public_key_hash(stealth_compact_t stealth);
+short_hash_t chain_stealth_compact_get_public_key_hash(stealth_compact_t stealth);
 
 BITPRIM_EXPORT
-void stealth_compact_get_public_key_hash_out(stealth_compact_t stealth, short_hash_t* out_pk_hash);
+void chain_stealth_compact_get_public_key_hash_out(stealth_compact_t stealth, short_hash_t* out_pk_hash);
 
 #ifdef __cplusplus
 } // extern "C"

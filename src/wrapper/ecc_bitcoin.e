@@ -272,13 +272,379 @@ feature -- Chain
 	        	hash_t l_val;
 		    	memcpy(l_val.hash, $a_hash, sizeof(l_val.hash));
 		    	
-		    	for (size_t i = 0; i < 32; ++i) {
-              		printf("%d\n", (int)l_val.hash[i]);
-             	}
 		    	
 		    	return chain_get_block_height ((chain_t) $a_chain, l_val, $out_height);
 	        ]"
 	    end
+
+
+
+
+
+--BITPRIM_EXPORT
+--error_code_t chain_get_block_header_by_height(chain_t chain, uint64_t /*size_t*/ height, header_t* out_header, uint64_t* /*size_t*/ out_height);
+
+	chain_get_block_header_by_hash (a_chain: POINTER; a_hash:POINTER; out_header: TYPED_POINTER [POINTER]; out_height: TYPED_POINTER [NATURAL_64]): INTEGER
+			--BITPRIM_EXPORT
+			--error_code_t chain_get_block_header_by_hash(chain_t chain, hash_t hash, header_t* out_header, uint64_t* /*size_t*/ out_height);
+		external
+	       "C inline use <bitprim/nodecint.h>"
+	    alias
+	        "[
+	        	hash_t l_val;
+		    	memcpy(l_val.hash, $a_hash, sizeof(l_val.hash));
+		    	
+		    	return chain_get_block_header_by_hash ((chain_t)$a_chain, l_val, (header_t*)$out_header, (uint64_t*)$out_height);
+	        ]"
+	    end
+
+
+	chain_get_block_header_by_height (a_chain: POINTER; a_height: NATURAL_64; out_header: TYPED_POINTER [POINTER];out_height: TYPED_POINTER [NATURAL_64]): INTEGER
+				--BITPRIM_EXPORT
+				--error_code_t chain_get_block_header_by_height(chain_t chain, uint64_t /*size_t*/ height, header_t* out_header, uint64_t* /*size_t*/ out_height);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+				return chain_get_block_header_by_height ((chain_t)$a_chain, (uint64_t) $a_height, (header_t*) $out_header, (uint64_t*) $out_height);
+		        ]"
+		end
+
+	chain_get_block_by_height (a_chain: POINTER; a_height: NATURAL_64; out_block: TYPED_POINTER [POINTER]; out_height: TYPED_POINTER [NATURAL_64]): INTEGER
+			--BITPRIM_EXPORT
+			--error_code_t chain_get_block_by_height(chain_t chain, uint64_t /*size_t*/ height, block_t* out_block, uint64_t* /*size_t*/ out_height);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+				return chain_get_block_by_height ((chain_t)$a_chain, (uint64_t) $a_height, (block_t*) $out_block, (uint64_t*) $out_height);
+		        ]"
+		end
+
+feature -- Block
+
+	chain_block_is_valid (a_block: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--int chain_block_is_valid(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return (EIF_BOOLEAN) chain_block_is_valid((block_t) $a_block);"
+		end
+
+	chain_block_header (a_block: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--int chain_block_is_valid(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_header((block_t) $a_block);"
+		end
+
+	chain_block_hash (a_block: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--hash_t chain_block_hash(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+			 hash_t ret = chain_block_hash((block_t) $a_block);
+             
+             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 32);
+             memcpy(arr, ret.hash, 32);
+             return arr;
+
+			]"
+		end
+
+	chain_block_transaction_count (a_block: POINTER): NATURAL_64
+			--	BITPRIM_EXPORT
+			--uint64_t /*size_t*/ chain_block_transaction_count(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_transaction_count((block_t) $a_block);"
+		end
+
+	chain_block_reward (a_block: POINTER; a_height: NATURAL_64): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t chain_block_reward(block_t block, uint64_t /*size_t*/ height);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_reward((block_t) $a_block, $a_height);"
+		end
+
+
+	chain_block_serialized_size (a_block: POINTER; a_version: NATURAL_32): NATURAL_64
+			-- BITPRIM_EXPORT
+			-- uint64_t /*size_t*/ chain_block_serialized_size(block_t block, uint32_t version);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_serialized_size((block_t) $a_block, $a_version);"
+		end
+
+
+	chain_block_proof_str (a_block: POINTER): POINTER
+			-- BITPRIM_EXPORT
+			-- char const* chain_block_proof_str(block_t block);	
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_proof_str((block_t)$a_block);"
+		end
+
+	chain_block_subsidy (a_height: NATURAL_64): NATURAL_64
+			--BITPRIM_EXPORT
+			--/*static*/
+			--uint64_t chain_block_subsidy(uint64_t /*size_t*/ height);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_subsidy((uint64_t)$a_height);"
+		end
+
+	chain_block_fees (a_block: POINTER): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t chain_block_fees(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_fees((block_t)$a_block);"
+		end
+
+
+	chain_block_claim (a_block: POINTER): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t chain_block_claim(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_claim((block_t)$a_block);"
+		end
+
+	chain_block_generate_merkle_root (a_block: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--hash_t chain_block_generate_merkle_root(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"[
+			 hash_t ret = chain_block_generate_merkle_root((block_t) $a_block);
+             
+             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 32);
+             memcpy(arr, ret.hash, 32);
+             return arr;
+
+			]"
+		end
+
+	chain_block_signature_operations (a_block: POINTER): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t chain_block_signature_operations(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_signature_operations((block_t)$a_block);"
+		end
+
+	chain_block_signature_operations_bip16_active (a_block: POINTER; a_bip16_active: BOOLEAN ): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t /*size_t*/ chain_block_signature_operations_bip16_active(block_t block, bool_t bip16_active);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_signature_operations_bip16_active((block_t)$a_block, (bool_t)$a_bip16_active);"
+		end
+
+	chain_block_total_inputs (a_block: POINTER; a_with_coinbase: BOOLEAN ): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t /*size_t*/ chain_block_total_inputs(block_t block, bool_t with_coinbase /*= true*/);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_total_inputs((block_t)$a_block, (bool_t)$a_with_coinbase);"
+		end
+
+	chain_block_is_extra_coinbases (a_block: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_extra_coinbases(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_extra_coinbases((block_t)$a_block);"
+		end
+
+	chain_block_is_final (a_block: POINTER; a_height: NATURAL_64; a_block_time: NATURAL_32): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_final(block_t block, uint64_t /*size_t*/ height, uint32_t block_time);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_final((block_t)$a_block, (uint64_t)$a_height, (uint32_t)$a_block_time);"
+		end
+
+	chain_block_is_distinct_transaction_set (a_block: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_distinct_transaction_set(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_distinct_transaction_set((block_t)$a_block);"
+		end
+
+	chain_block_is_valid_coinbase_claim (a_block: POINTER; a_height: NATURAL_64): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_valid_coinbase_claim(block_t block, uint64_t /*size_t*/ height);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_valid_coinbase_claim((block_t)$a_block, (uint64_t)$a_height);"
+		end
+
+	chain_block_is_valid_coinbase_script (a_block: POINTER; a_height: NATURAL_64): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_valid_coinbase_script(block_t block, uint64_t /*size_t*/ height);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_valid_coinbase_script((block_t)$a_block, (uint64_t)$a_height);"
+		end
+
+	chain_block_is_internal_double_spend (a_block: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_internal_double_spend(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_internal_double_spend((block_t)$a_block);"
+		end
+
+
+	chain_block_is_valid_merkle_root (a_block: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_block_is_valid_merkle_root(block_t block);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_is_valid_merkle_root((block_t)$a_block);"
+		end
+
+	chain_block_to_data (a_block: POINTER; a_wire: BOOLEAN; a_out_size: TYPED_POINTER [NATURAL_64]): POINTER
+			--BITPRIM_EXPORT
+			--uint8_t const* chain_block_to_data(block_t block, bool_t wire, uint64_t* /*size_t*/ out_size);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_to_data((block_t)$a_block, (bool_t)$a_wire, (uint64_t*)$a_out_size);"
+		end
+
+	chain_block_transaction_nth (a_block: POINTER; a_n: NATURAL_64): POINTER
+			--BITPRIM_EXPORT
+			--transaction_t chain_block_transaction_nth(block_t block, uint64_t /*size_t*/ n);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_block_transaction_nth((block_t) $a_block, (uint64_t)$a_n);"
+		end
+
+
+feature -- Block Header
+
+	chain_header_is_valid (a_header: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--int chain_header_is_valid(header_t header);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+			"return (EIF_BOOLEAN) chain_header_is_valid((header_t)$a_header);"
+		end
+
+	chain_header_nonce (a_header: POINTER): NATURAL_32
+			--BITPRIM_EXPORT
+			--uint32_t chain_header_nonce(header_t header);		
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"return chain_header_nonce((header_t)$a_header);"
+		end
+
+	chain_header_version (a_header: POINTER): NATURAL_32
+			--BITPRIM_EXPORT
+			--uint32_t chain_header_version(header_t header);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"return chain_header_version((header_t)$a_header);"
+		end
+
+	chain_header_bits (a_header: POINTER): NATURAL_32
+			--BITPRIM_EXPORT
+			--uint32_t chain_header_bits(header_t header);	
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"return chain_header_bits((header_t)$a_header);"
+		end
+
+	chain_header_merkle (a_header: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--hash_t chain_header_merkle(header_t header);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"[
+	 				hash_t ret = chain_header_merkle((header_t)$a_header);
+             
+		             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 32);
+		             memcpy(arr, ret.hash, 32);
+		             return arr;
+				]"
+		end
+
+	chain_header_previous_block_hash (a_header: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--hash_t chain_header_previous_block_hash(header_t header);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"[
+	 				hash_t ret = chain_header_previous_block_hash((header_t)$a_header);
+             
+		             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 32);
+		             memcpy(arr, ret.hash, 32);
+		             return arr;
+				]"
+		end
+
+	chain_header_timestamp (a_header: POINTER): NATURAL_32
+			--BITPRIM_EXPORT
+			--uint32_t chain_header_timestamp(header_t header);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"return chain_header_timestamp((header_t)$a_header);"
+		end
+
+
+	chain_header_serialized_size (a_header: POINTER; a_version: NATURAL_32): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t /*size_t*/ chain_header_serialized_size(header_t header, uint32_t version);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"return chain_header_serialized_size((header_t)$a_header, (uint32_t)$a_version);"
+		end
+
+	chain_header_satoshi_fixed_size (a_version: NATURAL_32): NATURAL_64
+			--BITPRIM_EXPORT
+			--uint64_t /*size_t*/ chain_header_satoshi_fixed_size(uint32_t version);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"return chain_header_satoshi_fixed_size((uint32_t)$a_version);"
+		end
 
 feature -- History Compact		
 
@@ -333,5 +699,48 @@ feature -- History Compact
 			"return chain_history_compact_get_value_or_previous_checksum((history_compact_t)$a_history)"
 		end
 
+feature -- Transaction
+
+	chain_transaction_is_valid (a_transaction: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--int chain_transaction_is_valid(transaction_t transaction);
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_transaction_is_valid ((transaction_t)$a_transaction);"
+		end
+
+	chain_transaction_version (a_transaction: POINTER): NATURAL_32
+			--BITPRIM_EXPORT
+			--uint32_t chain_transaction_version(transaction_t transaction);
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_transaction_version ((transaction_t)$a_transaction);"
+		end
+
+	chain_transaction_hash (a_transaction: POINTER): POINTER
+			--BITPRIM_EXPORT
+			--hash_t chain_transaction_hash(transaction_t transaction);
+		external
+		       "C inline use <bitprim/nodecint.h>"
+		alias
+				"[
+	 				hash_t ret = chain_transaction_hash((transaction_t) $a_transaction);
+             
+		             uint8_t* arr = (uint8_t*)malloc(sizeof(uint8_t) * 32);
+		             memcpy(arr, ret.hash, 32);
+		             return arr;
+				]"
+		end
+
+	chain_transaction_is_coinbase (a_transaction: POINTER): BOOLEAN
+			--BITPRIM_EXPORT
+			--bool_t chain_transaction_is_coinbase(transaction_t transaction);	
+		external
+			"C inline use <bitprim/nodecint.h>"
+		alias
+			"return chain_transaction_is_coinbase ((transaction_t)$a_transaction);"
+		end
 
 end

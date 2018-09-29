@@ -11,7 +11,10 @@ feature {NONE} --Initialization
 --			test_word_list
 --			test_payment_address
 --			test_bitcoin_hash
-			test_block_height
+--			test_block_height
+--			test_block_header_by_hash
+--			test_block_header_by_height
+			test_block_by_height
 		end
 
 
@@ -132,6 +135,119 @@ feature {NONE} --Initialization
 			-- Block #7 Testnet
 			l_ret := l_chain.block_height ("00000000e29e3aa65f3d12440eac9081844c464aeba7c6e6121dfc8ac0c02ba6")
 
+
+
+			executor.stop
+			io.read_line
+		end
+
+	test_block_header_by_hash
+		local
+			executor: ECC_BTC_EXECUTOR
+			l_chain: ECC_CHAIN
+			l_ret: NATURAL_64
+			l_block_header: ECC_BLOCK_HEADER
+		do
+ 			create executor.make
+			executor.init_and_run_wait
+			l_chain := executor.chain
+
+			from until l_chain.heigth > 50 loop end
+
+			print ("%N Heigth:" + l_chain.heigth.out + "%N" )
+
+				-- Block #7 Testnet
+			l_ret := l_chain.block_height ("000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943")
+
+			l_block_header := l_chain.block_header_by_hash ("000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943")
+			print ("%NIs Valid Block Header:" + l_block_header.is_valid.out)
+			print ("%NHeader Nonce:" + l_block_header.nonce.out)
+			print ("%NVersion:" + l_block_header.version.out)
+			print ("%NTimeStamp:" + l_block_header.timestamp.out)
+			print ("%NBits:" + l_block_header.bits)
+			print ("%NMerkle:" + l_block_header.merkle)
+			print ("%NPREV block hash:" + l_block_header.previous_block_hash)
+
+			executor.stop
+			io.read_line
+		end
+
+	test_block_header_by_height
+		local
+			executor: ECC_BTC_EXECUTOR
+			l_chain: ECC_CHAIN
+			l_ret: NATURAL_64
+			l_block_header: ECC_BLOCK_HEADER
+		do
+ 			create executor.make
+			executor.init_and_run_wait
+			l_chain := executor.chain
+
+			from until l_chain.heigth > 50 loop end
+
+			print ("%N Heigth:" + l_chain.heigth.out + "%N" )
+
+			l_block_header := l_chain.block_header_by_height (7)
+			print ("%NIs Valid Block Header:" + l_block_header.is_valid.out)
+			print ("%NHeader Nonce:" + l_block_header.nonce.out)
+			print ("%NVersion:" + l_block_header.version.out)
+			print ("%NTimeStamp:" + l_block_header.timestamp.out)
+			print ("%NBits:" + l_block_header.bits)
+			print ("%NMerkle:" + l_block_header.merkle)
+			print ("%NPREV block hash:" + l_block_header.previous_block_hash)
+
+			executor.stop
+			io.read_line
+		end
+
+	test_block_by_height
+		local
+			executor: ECC_BTC_EXECUTOR
+			l_chain: ECC_CHAIN
+			l_ret: NATURAL_64
+			l_block_header: ECC_BLOCK_HEADER
+			l_block: ECC_BLOCK
+			l_transaction: ECC_TRANSACTION
+		do
+ 			create executor.make
+			executor.init_and_run_wait
+			l_chain := executor.chain
+
+			from until l_chain.heigth > 50 loop end
+
+			print ("%N Heigth:" + l_chain.heigth.out + "%N" )
+
+			l_block := l_chain.block_by_height (7)
+			l_block.set_height (7)
+
+			print ("%NBlock_Hash:" + l_block.hash)
+			print ("%NBlock_is_valid:" + l_block.is_valid.out)
+			print ("%NBlock_transaction_count:" + l_block.transaction_count.out)
+			print ("%NBlock_reward:" + l_block.reward.out)
+			print ("%NBlock_size:" + l_block.size.out)
+			print ("%NBlock_proof_string:" + l_block.proof_string)
+			print ("%NBlock_fees:" + l_block.fees.out)
+			print ("%NBlock_claim:" + l_block.claim.out)
+			print ("%NBlock_subsidy:" + l_block.subsidy.out)
+			print ("%NBlock_generate_merkle_root:" + l_block.generate_merkle_root)
+
+			l_block_header := l_block.header
+			print ("%NHeader_is_valid:" + l_block_header.is_valid.out)
+			print ("%NHeader_Nonce:" + l_block_header.nonce.out)
+			print ("%NHeader_Version:" + l_block_header.version.out)
+			print ("%NHeader_TimeStamp:" + l_block_header.timestamp.out)
+			print ("%NHeader_Bits:" + l_block_header.bits)
+			print ("%NHeader_Merkle:" + l_block_header.merkle)
+			print ("%NHeader_prev_block hash:" + l_block_header.previous_block_hash)
+			print ("%NHeader_Serialized_Size:" + l_block_header.serialized_size.out)
+			print ("%NHeader_Size:" + l_block_header.size.out)
+
+
+			l_transaction := l_block.transaction_nth (0)
+			print ("%NBlock_transaction_is_valid:" + l_transaction.is_valid.out)
+			print ("%NBlock_transaction_version:" + l_transaction.version.out)
+			print ("%NBlock_transaction_hash:" + l_transaction.hash)
+			print ("%NBlock_transaction_is_coin_base:" + l_transaction.is_coin_base.out)
 
 
 

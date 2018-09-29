@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2016-2018 Bitprim Inc.
  *
- * This file is part of libbitcoin.
+ * This file is part of Bitprim.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -36,7 +36,7 @@ BITPRIM_EXPORT
 void chain_point_get_hash_out(point_t point, hash_t* out_hash);
 
 BITPRIM_EXPORT
-int /*bool*/ chain_point_is_valid(point_t point);
+bool_t chain_point_is_valid(point_t point);
 
 BITPRIM_EXPORT
 uint32_t chain_point_get_index(point_t point);

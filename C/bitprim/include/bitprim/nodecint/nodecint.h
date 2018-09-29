@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017-2018 Bitprim Inc.
+ * Copyright (c) 2016-2018 Bitprim Inc.
  *
  * This file is part of Bitprim.
  *
@@ -49,7 +49,7 @@
 #include <bitprim/nodecint/chain/output.h>
 #include <bitprim/nodecint/chain/output_list.h>
 #include <bitprim/nodecint/chain/output_point.h>
-#include <bitprim/nodecint/chain/payment_address.h>
+#include <bitprim/nodecint/wallet/payment_address.h>
 #include <bitprim/nodecint/chain/point.h>
 #include <bitprim/nodecint/chain/point_list.h>
 #include <bitprim/nodecint/chain/script.h>

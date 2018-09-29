@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017-2018 Bitprim Inc.
+ * Copyright (c) 2016-2018 Bitprim Inc.
  *
  * This file is part of Bitprim.
  *
@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BITPRIM_NODECINT_CHAIN_HASH_LIST_H_
-#define BITPRIM_NODECINT_CHAIN_HASH_LIST_H_
+#ifndef BITPRIM_NODECINT_WALLET_PAYMENT_ADDRESS_H_
+#define BITPRIM_NODECINT_WALLET_PAYMENT_ADDRESS_H_
 
 #include <stdint.h>
 
@@ -29,26 +29,36 @@
 extern "C" {
 #endif
 
+#ifdef BITPRIM_CURRENCY_BCH
 BITPRIM_EXPORT
-hash_list_t chain_hash_list_construct_default(void);
+void wallet_payment_address_set_cashaddr_prefix(char const* prefix);
+#endif //BITPRIM_CURRENCY_BCH
 
 BITPRIM_EXPORT
-void chain_hash_list_push_back(hash_list_t list, hash_t hash);
+char* wallet_payment_address_encoded(payment_address_t payment_address);
+
+#ifdef BITPRIM_CURRENCY_BCH
+BITPRIM_EXPORT
+char* wallet_payment_address_encoded_cashaddr(payment_address_t payment_address);
+#endif //BITPRIM_CURRENCY_BCH
 
 BITPRIM_EXPORT
-void chain_hash_list_destruct(hash_list_t list);
+payment_address_t wallet_payment_address_construct_from_string(char const* address);
 
 BITPRIM_EXPORT
-uint64_t /*size_t*/ chain_hash_list_count(hash_list_t list);
+short_hash_t wallet_payment_address_hash(payment_address_t payment_address);
 
 BITPRIM_EXPORT
-hash_t chain_hash_list_nth(hash_list_t list, uint64_t /*size_t*/ n);
+uint8_t wallet_payment_address_version(payment_address_t payment_address);
 
 BITPRIM_EXPORT
-void chain_hash_list_nth_out(hash_list_t list, uint64_t /*size_t*/ n, hash_t* out_hash);
+bool_t wallet_payment_address_is_valid(payment_address_t payment_address);
+
+BITPRIM_EXPORT
+void wallet_payment_address_destruct(payment_address_t payment_address);
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif /* BITPRIM_NODECINT_CHAIN_HASH_LIST_H_ */
+#endif /* BITPRIM_NODECINT_WALLET_PAYMENT_ADDRESS_H_ */

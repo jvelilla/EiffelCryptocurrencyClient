@@ -14,6 +14,8 @@ inherit
 		end
 	REFACTORING_HELPER
 
+	ECC_ERROR
+
 create
 	make
 
@@ -30,13 +32,11 @@ feature -- Access
 	get_history (a_address: ECC_PAYMENT_ADDRESS):detachable  ECC_HISTORY_COMPACT_LIST
 		local
 			l_pointer: POINTER
-			l_res: INTEGER
 		do
 			create l_pointer
 				-- TODO check the value of the response of chain_get_history.
-			l_res := {ECC_BITCOIN}.chain_get_history (item, a_address.item, 0, 0, $l_pointer)
+			error_code := {ECC_BITCOIN}.chain_get_history (item, a_address.item, 0, 0, $l_pointer)
 			create Result.make(l_pointer)
-			to_implement ("Error Handling")
 		end
 
 	heigth: NATURAL_64
@@ -44,15 +44,14 @@ feature -- Access
 			l_res: INTEGER
 			l_out: NATURAL_64
 		do
-			l_res := {ECC_BITCOIN}.chain_get_last_height (item, $l_out)
+			error_code := {ECC_BITCOIN}.chain_get_last_height (item, $l_out)
 			Result := l_out
-			to_implement ("Error Handling")
 		ensure
 			valid_height: Result >= 0
 		end
 
 	block_height (a_hash: READABLE_STRING_8): NATURAL_64
-			-- Get the block heigh given the hash `a_hash'.
+			-- Get the block height given the hash `a_hash'.
 		require
 			is_valid_hash: {ECC_VALIDATOR}.is_valid_hash (a_hash)
 		local
@@ -67,18 +66,51 @@ feature -- Access
 			create l_byte_array.make_from_hex_string (a_hash)
 			create l_managed_pointer.make_from_array (l_byte_array.to_natural_8_array)
 
-			l_res := {ECC_BITCOIN}.chain_get_block_height (item, l_managed_pointer.item, $l_out)
-
-			print ("%N l_res:" + l_res.out + "%N" )
-			print ("%N l_out:" + l_out.out + "%N" )
-
+			error_code := {ECC_BITCOIN}.chain_get_block_height (item, l_managed_pointer.item, $l_out)
 			Result := l_out
-			to_implement ("Error Handling")
 		end
 
---	BITPRIM_EXPORT
---error_code_t chain_get_block_height(chain_t chain, hash_t hash, uint64_t* /*size_t*/ out_height);
+feature -- Access: Block Header
 
+	block_header_by_hash (a_hash: READABLE_STRING_8): ECC_BLOCK_HEADER
+		require
+			is_valid_hash: {ECC_VALIDATOR}.is_valid_hash (a_hash)
+		local
+			l_out: NATURAL_64
+			l_managed_pointer: MANAGED_POINTER
+			l_byte_array: BYTE_ARRAY_CONVERTER
+			l_ptr: POINTER
+		do
+			create l_byte_array.make_from_hex_string (a_hash)
+			create l_managed_pointer.make_from_array (l_byte_array.to_natural_8_array)
+
+			error_code := {ECC_BITCOIN}.chain_get_block_header_by_hash (item, l_managed_pointer.item, $l_ptr, $l_out)
+
+			create Result.make (l_ptr)
+		end
+
+	block_header_by_height (a_height: NATURAL_64): ECC_BLOCK_HEADER
+		local
+			l_out: NATURAL_64
+			l_ptr: POINTER
+		do
+			error_code := {ECC_BITCOIN}.chain_get_block_header_by_height (item, a_height, $l_ptr, $l_out)
+			create Result.make (l_ptr)
+		end
+
+feature -- Access Block
+
+	block_by_height (a_height: NATURAL_64): ECC_BLOCK
+		local
+			l_out: NATURAL_64
+			l_ptr: POINTER
+		do
+			error_code := {ECC_BITCOIN}.chain_get_block_by_height (item, a_height, $l_ptr, $l_out)
+			create Result.make (l_ptr)
+			Result.set_height (l_out)
+		ensure
+			same_height: a_height = Result.height
+		end
 
 feature -- Disponse
 

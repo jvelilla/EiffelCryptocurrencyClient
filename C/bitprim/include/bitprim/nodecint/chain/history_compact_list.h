@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017-2018 Bitprim Inc.
+ * Copyright (c) 2016-2018 Bitprim Inc.
  *
  * This file is part of Bitprim.
  *
@@ -22,6 +22,7 @@
 
 #include <stdint.h>
 
+#include <bitprim/nodecint/list_creator.h>
 #include <bitprim/nodecint/primitives.h>
 #include <bitprim/nodecint/visibility.h>
 
@@ -29,14 +30,7 @@
 extern "C" {
 #endif
 
-BITPRIM_EXPORT
-void chain_history_compact_list_destruct(history_compact_list_t list);
-
-BITPRIM_EXPORT
-uint64_t /*size_t*/ chain_history_compact_list_count(history_compact_list_t list);
-
-BITPRIM_EXPORT
-history_compact_t chain_history_compact_list_nth(history_compact_list_t list, uint64_t /*size_t*/ n);
+BITPRIM_LIST_DECLARE(chain, history_compact_list_t, history_compact_t, history_compact_list)
 
 #ifdef __cplusplus
 } // extern "C"
